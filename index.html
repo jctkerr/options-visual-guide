@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Complete Options Visual Guide ($10,000 Google Example)</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+</head>
+<body class="bg-[var(--background)] text-[var(--foreground)] antialiased p-4 md:p-8">
+  <div class="max-w-5xl mx-auto space-y-8">
+
+    <!-- Hero Header -->
+    <header class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-3">
+      <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-500">
+        Complete Interactive Guide • Explain Like I'm 5
+      </div>
+      <h1 class="text-2xl md:text-3xl font-bold tracking-tight">
+        How Options Work: The Complete $10,000 Visual Playbook
+      </h1>
+      <p class="text-sm text-[var(--muted-foreground)] leading-relaxed max-w-3xl">
+        Every options strategy in the world belongs to one of <strong>4 families</strong>: betting a stock goes <strong>Up</strong>, betting it goes <strong>Down</strong>, generating <strong>Income/Insurance on shares you already own</strong>, or betting on <strong>Volatility</strong> (an explosion vs. going nowhere). Below, we use <strong>Google (GOOGL) at $100/share</strong> and a <strong>$10,000 investment</strong> across all 4 families. Remember: <strong>1 contract = 100 shares</strong>.
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-3">
+          <div class="text-xs text-[var(--muted-foreground)]">Starting Google Price</div>
+          <div class="text-lg font-bold">$100 / share</div>
+        </div>
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-3">
+          <div class="text-xs text-[var(--muted-foreground)]">Your Capital</div>
+          <div class="text-lg font-bold">$10,000</div>
+        </div>
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-3">
+          <div class="text-xs text-[var(--muted-foreground)]">1 Option Contract</div>
+          <div class="text-lg font-bold text-blue-500">100 Shares</div>
+        </div>
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-3">
+          <div class="text-xs text-[var(--muted-foreground)]">4 Core Families</div>
+          <div class="text-lg font-bold text-emerald-500">Up • Down • Own • Vol</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- SECTION 1: THE INTERACTIVE SIMULATOR -->
+    <section id="simulator-section" class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm space-y-4 select-none">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border)] pb-3">
+        <div>
+          <h2 class="text-lg font-bold">1. The Ultimate Options Simulator ($10,000 Bet)</h2>
+          <p class="text-xs text-[var(--muted-foreground)]">Choose a strategy family below, then drag the price slider or scrub directly on the Payoff Curve chart.</p>
+        </div>
+
+        <!-- 5 Mode Tabs -->
+        <div class="flex flex-wrap items-center gap-1 bg-[var(--background)] p-1 rounded-lg border border-[var(--border)]" role="tablist" aria-label="Strategy family">
+          <button onclick="setMode('bullish')" id="mode-bullish" role="tab" title="Betting Google goes UP"
+            class="px-2.5 py-1.5 text-xs font-semibold rounded-md transition">
+            📈 Going UP
+          </button>
+          <button onclick="setMode('bearish')" id="mode-bearish" role="tab" title="Betting Google goes DOWN"
+            class="px-2.5 py-1.5 text-xs font-medium rounded-md transition">
+            📉 Going DOWN
+          </button>
+          <button onclick="setMode('income')" id="mode-income" role="tab" title="Already own 100 shares: Covered Call, Protective Put, Collar"
+            class="px-2.5 py-1.5 text-xs font-medium rounded-md transition">
+            🏠 Own Stock (Rent &amp; Hedge)
+          </button>
+          <button onclick="setMode('volatility')" id="mode-volatility" role="tab" title="Straddle, Strangle, and Iron Condor"
+            class="px-2.5 py-1.5 text-xs font-medium rounded-md transition">
+            💥 Volatility (Explode vs Flat)
+          </button>
+          <button onclick="setMode('versus')" id="mode-versus" role="tab" title="Compare Calls vs Puts side-by-side"
+            class="px-2.5 py-1.5 text-xs font-medium rounded-md transition">
+            ⚔️ Calls vs Puts
+          </button>
+        </div>
+      </div>
+
+      <!-- Slider & Quick Scenario Buttons -->
+      <div class="flex flex-wrap items-center justify-between gap-4 bg-[var(--background)] border border-[var(--border)] rounded-xl p-3.5">
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-[var(--muted-foreground)]">Google at Expiration:</span>
+          <span id="price-readout" class="font-bold text-base px-2 py-0.5 rounded bg-[var(--card)] border border-[var(--border)]">$120 (+20%)</span>
+        </div>
+
+        <div class="flex-1 min-w-[220px] flex flex-col">
+          <input id="price-slider" type="range" min="70" max="130" step="1" value="120" aria-label="Google ending stock price"
+            class="w-full accent-[var(--primary)] cursor-pointer" oninput="updatePrice(this.value)" />
+          <div class="flex justify-between text-xs text-[var(--muted-foreground)] mt-0.5">
+            <span>$70 (-30%)</span>
+            <span>$85 (-15%)</span>
+            <span>$100 (Flat)</span>
+            <span>$115 (+15%)</span>
+            <span>$130 (+30%)</span>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-1" role="group" aria-label="Preset stock moves">
+          <button onclick="setMove(-20)" id="btn--20" class="px-2.5 py-1 text-xs font-medium rounded-md border border-[var(--border)] hover:opacity-80 transition">-20% ($80)</button>
+          <button onclick="setMove(-10)" id="btn--10" class="px-2.5 py-1 text-xs font-medium rounded-md border border-[var(--border)] hover:opacity-80 transition">-10% ($90)</button>
+          <button onclick="setMove(0)" id="btn-0" class="px-2.5 py-1 text-xs font-medium rounded-md border border-[var(--border)] hover:opacity-80 transition">0% ($100)</button>
+          <button onclick="setMove(10)" id="btn-10" class="px-2.5 py-1 text-xs font-medium rounded-md border border-[var(--border)] hover:opacity-80 transition">+10% ($110)</button>
+          <button onclick="setMove(20)" id="btn-20" class="px-2.5 py-1 text-xs font-medium rounded-md border border-[var(--border)] hover:opacity-80 transition">+20% ($120)</button>
+        </div>
+      </div>
+
+      <!-- Simulator Grid: Left = Interactive Payoff Curve, Right = Bidirectional P&L Bars -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-stretch">
+        <!-- Left 5 cols: SVG Payoff Chart -->
+        <div class="md:col-span-5 bg-[var(--background)] border border-[var(--border)] rounded-xl p-3 flex flex-col justify-between">
+          <div class="flex items-center justify-between text-xs px-1 mb-1">
+            <span class="font-semibold">Payoff Curve ($10k Bet)</span>
+            <span class="text-[var(--muted-foreground)]">Click or drag chart</span>
+          </div>
+          <svg id="payoff-svg" viewBox="0 0 280 185" class="w-full h-48 cursor-ew-resize overflow-visible"></svg>
+          <div id="chart-legend" class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs pt-2 border-t border-[var(--border)]"></div>
+        </div>
+
+        <!-- Right 7 cols: 4 Strategy P&L Rows -->
+        <div class="md:col-span-7 flex flex-col justify-between space-y-2">
+          <div class="relative h-5 text-xs text-[var(--muted-foreground)] border-b border-[var(--border)]">
+            <span class="absolute left-0 text-rose-500 font-medium">← Downside Loss (-$10k max)</span>
+            <span class="absolute -translate-x-1/2 font-semibold text-[var(--foreground)]" style="left: 33%;">$0 Breakeven ($10k)</span>
+            <span class="absolute right-0 text-emerald-500 font-medium">Upside Profit (+$50k) →</span>
+          </div>
+          <div id="rows-container" class="space-y-2 flex-1 flex flex-col justify-around"></div>
+        </div>
+      </div>
+
+      <!-- Bottom Plain-English Inspector Bar -->
+      <div id="inspector-bar" class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-3.5 text-xs"></div>
+    </section>
+
+    <!-- SECTION 2: THE MASTER MAP OF OPTIONS -->
+    <section class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-4">
+      <div>
+        <span class="text-xs font-bold uppercase tracking-wider text-blue-500">Big Picture</span>
+        <h2 class="text-xl font-bold mt-0.5">The Complete Map of Options Strategies</h2>
+        <p class="text-xs text-[var(--muted-foreground)] mt-1">Click any row's family button to test those exact strategies in the interactive simulator above.</p>
+      </div>
+
+      <div class="overflow-x-auto border border-[var(--border)] rounded-xl">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="bg-[var(--background)] border-b border-[var(--border)] text-[var(--muted-foreground)]">
+              <th class="p-3 font-semibold">Your View on Google ($100)</th>
+              <th class="p-3 font-semibold">1. The Simple Uncapped Play</th>
+              <th class="p-3 font-semibold">2. The Smarter / Capped Play</th>
+              <th class="p-3 font-semibold">3. The "Be the House" / Income Play</th>
+              <th class="p-3 font-semibold text-right">Try It</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[var(--border)]">
+            <tr>
+              <td class="p-3 font-bold text-emerald-500">📈 Going UP (Bullish)</td>
+              <td class="p-3"><strong>Buy Call</strong> (Uncapped rally bet)</td>
+              <td class="p-3"><strong>Bull Call Spread</strong> (Cheaper, capped at +10%)</td>
+              <td class="p-3"><strong>Sell Cash-Secured Put</strong> (Paid to wait to buy)</td>
+              <td class="p-3 text-right">
+                <button onclick="setMode('bullish'); document.getElementById('simulator-section').scrollIntoView({behavior:'smooth'});" class="px-2.5 py-1 rounded border border-[var(--border)] hover:bg-[var(--background)] font-semibold">Simulate ↑</button>
+              </td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-orange-500">📉 Going DOWN (Bearish)</td>
+              <td class="p-3"><strong>Buy Put</strong> (Uncapped crash bet)</td>
+              <td class="p-3"><strong>Bear Put Spread</strong> (Cheaper, capped at -10%)</td>
+              <td class="p-3"><strong>Sell Call Spread</strong> (Paid if stock stays flat/drops)</td>
+              <td class="p-3 text-right">
+                <button onclick="setMode('bearish'); document.getElementById('simulator-section').scrollIntoView({behavior:'smooth'});" class="px-2.5 py-1 rounded border border-[var(--border)] hover:bg-[var(--background)] font-semibold">Simulate ↑</button>
+              </td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-blue-500">🏠 Already Own 100 Shares</td>
+              <td class="p-3"><strong>Protective Put</strong> (Buy crash insurance at $95)</td>
+              <td class="p-3"><strong>The Collar</strong> (Sell Call to pay for Put insurance)</td>
+              <td class="p-3"><strong>Covered Call</strong> (Collect monthly rent on shares)</td>
+              <td class="p-3 text-right">
+                <button onclick="setMode('income'); document.getElementById('simulator-section').scrollIntoView({behavior:'smooth'});" class="px-2.5 py-1 rounded border border-[var(--border)] hover:bg-[var(--background)] font-semibold">Simulate ↑</button>
+              </td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-purple-500">💥 Volatility (Explode vs Flat)</td>
+              <td class="p-3"><strong>Long Straddle</strong> (Buy Call + Put at $100)</td>
+              <td class="p-3"><strong>Long Strangle</strong> (Cheaper Call + Put at $105/$95)</td>
+              <td class="p-3"><strong>Iron Condor</strong> (Win +40% if stock stays $90-$110)</td>
+              <td class="p-3 text-right">
+                <button onclick="setMode('volatility'); document.getElementById('simulator-section').scrollIntoView({behavior:'smooth'});" class="px-2.5 py-1 rounded border border-[var(--border)] hover:bg-[var(--background)] font-semibold">Simulate ↑</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 3: GOING UP (+20% BULLISH GUIDE & TABLE) -->
+    <section class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-5">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border)] pb-3">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-emerald-500">Family 1 • Bullish Playbook</span>
+          <h2 class="text-xl font-bold mt-0.5">When You Think Google Goes UP by 20% ($100 → $120)</h2>
+        </div>
+        <button onclick="setMode('bullish'); document.getElementById('simulator-section').scrollIntoView({behavior:'smooth'});"
+          class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-[var(--border)] hover:bg-[var(--background)] transition">
+          Load +20% in Simulator ↑
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs leading-relaxed">
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 space-y-1.5">
+          <div class="font-bold text-sm">0. Buy the Stock ("Buy the Lego Boxes")</div>
+          <p class="text-[var(--muted-foreground)]">
+            A limited-edition Lego set costs <strong>$100 today</strong>. You spend $10,000 to buy <strong>100 boxes</strong>. When the price hits $120 (+20%), you sell them for $12,000 and make <strong>+$2,000 (+20%)</strong>. Simple, no expiration clock.
+          </p>
+        </div>
+
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 space-y-1.5">
+          <div class="font-bold text-sm text-blue-500">1. Buy Call Options ("Buy Price-Lock Coupons")</div>
+          <p class="text-[var(--muted-foreground)]">
+            Instead of buying boxes, you buy <strong>$5 coupons</strong> that let you buy 1 box for $100 anytime in the next 60 days. With $10,000, you buy <strong>2,000 coupons</strong> (20 contracts). At $120, each coupon is worth $20 - turning $10,000 into <strong>$40,000 (+$30,000 profit / +300%)</strong>! <em>Catch:</em> If the box stays at $100, the coupons expire worthless (-$10,000).
+          </p>
+        </div>
+
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 space-y-1.5">
+          <div class="font-bold text-sm text-emerald-500">2. Bull Call Spread ("Cheaper Coupon with a Cap")</div>
+          <p class="text-[var(--muted-foreground)]">
+            You buy the $5 coupon (to buy at $100), and help pay for it by selling another kid a $1 coupon for any gains above <strong>$110</strong>. Now each coupon costs you <strong>$4</strong>, so $10,000 buys <strong>2,500 coupons</strong>. You make <em>more</em> money than regular Calls on a +10% move (<strong>+$15,000 profit</strong> at $110), but your payout stops growing above $110.
+          </p>
+        </div>
+
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 space-y-1.5">
+          <div class="font-bold text-sm text-purple-500">3. Sell a Cash-Secured Put ("Be the Insurance Company")</div>
+          <p class="text-[var(--muted-foreground)]">
+            A nervous owner pays you <strong>$500 cash today</strong> if you promise: <em>"If the price drops below $100, I'll buy your 100 boxes for $100 each."</em> You lock $10,000 in a safe as collateral. When Google rises to $120 (or stays flat at $100!), nobody forces you to buy, and you keep the <strong>+$500 (+5%)</strong>.
+          </p>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto border border-[var(--border)] rounded-xl">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="bg-[var(--background)] border-b border-[var(--border)] text-[var(--muted-foreground)]">
+              <th class="p-3 font-semibold">Bullish Strategy ($10,000 Invested)</th>
+              <th class="p-3 font-semibold">What You Buy Today</th>
+              <th class="p-3 font-semibold">Breakeven</th>
+              <th class="p-3 font-semibold">If Drops -10% ($90)</th>
+              <th class="p-3 font-semibold">If Flat 0% ($100)</th>
+              <th class="p-3 font-semibold">If Up +10% ($110)</th>
+              <th class="p-3 font-semibold bg-emerald-500/10 text-emerald-500">If Up +20% ($120)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[var(--border)]">
+            <tr>
+              <td class="p-3 font-bold">0. Buy the Stock</td>
+              <td class="p-3 text-[var(--muted-foreground)]">100 shares @ $100</td>
+              <td class="p-3">$100 (0%)</td>
+              <td class="p-3 text-rose-500">$9,000 (-$1k)</td>
+              <td class="p-3">$10,000 ($0)</td>
+              <td class="p-3 text-emerald-500">$11,000 (+$1k)</td>
+              <td class="p-3 font-bold text-emerald-500 bg-emerald-500/5">$12,000 (+$2k / +20%)</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-blue-500">1. Buy Call Options</td>
+              <td class="p-3 text-[var(--muted-foreground)]">20 contracts ($100 Call @ $5/sh)</td>
+              <td class="p-3">$105 (+5%)</td>
+              <td class="p-3 text-rose-500 font-semibold">$0 (-$10k)</td>
+              <td class="p-3 text-rose-500 font-semibold">$0 (-$10k)</td>
+              <td class="p-3 text-emerald-500">$20,000 (+$10k)</td>
+              <td class="p-3 font-bold text-emerald-500 bg-emerald-500/5">$40,000 (+$30k / +300%) ★</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-emerald-500">2. Bull Call Spread</td>
+              <td class="p-3 text-[var(--muted-foreground)]">25 spreads ($100/$110 cap @ $4/sh)</td>
+              <td class="p-3">$104 (+4%)</td>
+              <td class="p-3 text-rose-500 font-semibold">$0 (-$10k)</td>
+              <td class="p-3 text-rose-500 font-semibold">$0 (-$10k)</td>
+              <td class="p-3 font-bold text-emerald-500">$25,000 (+$15k) ★</td>
+              <td class="p-3 font-bold text-emerald-500 bg-emerald-500/5">$25,000 (+$15k / +150%)</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-purple-500">3. Sell a Put</td>
+              <td class="p-3 text-[var(--muted-foreground)]">1 contract ($100 Put, collect $500)</td>
+              <td class="p-3">$95 (-5%)</td>
+              <td class="p-3 text-rose-500">$9,500 (-$500)</td>
+              <td class="p-3 font-bold text-emerald-500">$10,500 (+$500) ★</td>
+              <td class="p-3 text-emerald-500">$10,500 (+$500)</td>
+              <td class="p-3 font-bold text-emerald-500 bg-emerald-500/5">$10,500 (+$500 / +5%)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 4: GOING DOWN (-10% BEARISH GUIDE & TABLE) -->
+    <section class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-5">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border)] pb-3">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-orange-500">Family 2 • Bearish Playbook</span>
+          <h2 class="text-xl font-bold mt-0.5">When You Think Google Goes DOWN by 10% ($100 → $90)</h2>
+        </div>
+        <button onclick="setMode('bearish'); document.getElementById('simulator-section').scrollIntoView({behavior:'smooth'});"
+          class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-[var(--border)] hover:bg-[var(--background)] transition">
+          Load -10% in Simulator ↑
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs leading-relaxed">
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 space-y-1.5">
+          <div class="font-bold text-sm">0. Short the Stock ("Borrow &amp; Sell the Box")</div>
+          <p class="text-[var(--muted-foreground)]">
+            You borrow 100 Lego boxes from a friend, sell them today for $100 each ($10,000), wait for the price to drop to $90, buy 100 boxes back for $9,000, return them, and pocket <strong>+$1,000 (+10%)</strong>. <em>Danger:</em> If the box rockets to $250 instead, you still have to buy 100 boxes back at $250 - your potential loss is unlimited.
+          </p>
+        </div>
+
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 space-y-1.5">
+          <div class="font-bold text-sm text-orange-500">1. Buy Put Options ("Buy Price-Floor Coupons")</div>
+          <p class="text-[var(--muted-foreground)]">
+            You pay <strong>$5 per coupon</strong> for the right to force someone to buy Google from you at <strong>$100</strong>. With $10,000, you buy <strong>2,000 coupons</strong>. At $90 (-10%), each coupon is worth $10 - turning $10,000 into <strong>$20,000 (+$10,000 profit / +100%)</strong>. At $80 (-20%), it turns into <strong>$40,000 (+300%)</strong>! And your worst-case loss is strictly capped at your $10,000 bet.
+          </p>
+        </div>
+
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 space-y-1.5">
+          <div class="font-bold text-sm text-emerald-500">2. Bear Put Spread ("The -10% Target Winner ★")</div>
+          <p class="text-[var(--muted-foreground)]">
+            Because you specifically expect a <strong>-10% drop to $90</strong> (not a -30% crash), you buy the $100 Put coupon ($5) and sell the $90 Put coupon ($1) to cut your cost to <strong>$4 per coupon</strong> (2,500 coupons total). At <strong>$90 (-10%)</strong>, your $10,000 turns into <strong>$25,000 (+$15,000 profit / +150%)</strong> - beating plain Put Options by $5,000!
+          </p>
+        </div>
+
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 space-y-1.5">
+          <div class="font-bold text-sm text-blue-500">3. Sell a Call ("Be the House Against a Rally")</div>
+          <p class="text-[var(--muted-foreground)]">
+            An optimistic trader pays you <strong>$500 cash today</strong> for a $100 Call coupon. If Google drops 10% to $90 - or even if Google stays completely flat at $100 - their coupon expires worthless and you keep the <strong>+$500 (+5%)</strong>.
+          </p>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto border border-[var(--border)] rounded-xl">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="bg-[var(--background)] border-b border-[var(--border)] text-[var(--muted-foreground)]">
+              <th class="p-3 font-semibold">Bearish Strategy ($10,000 Invested)</th>
+              <th class="p-3 font-semibold">What You Do Today</th>
+              <th class="p-3 font-semibold">Breakeven</th>
+              <th class="p-3 font-semibold">If Crash -20% ($80)</th>
+              <th class="p-3 font-semibold bg-orange-500/10 text-orange-500">If Drops -10% ($90)</th>
+              <th class="p-3 font-semibold">If Flat 0% ($100)</th>
+              <th class="p-3 font-semibold">If Rises +10% ($110)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[var(--border)]">
+            <tr>
+              <td class="p-3 font-bold">0. Short the Stock</td>
+              <td class="p-3 text-[var(--muted-foreground)]">Borrow &amp; sell 100 sh @ $100</td>
+              <td class="p-3">$100 (0%)</td>
+              <td class="p-3 text-emerald-500">$12,000 (+$2k)</td>
+              <td class="p-3 font-bold text-emerald-500 bg-orange-500/5">$11,000 (+$1k / +10%)</td>
+              <td class="p-3">$10,000 ($0)</td>
+              <td class="p-3 text-rose-500">$9,000 (-$1k)</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-orange-500">1. Buy Put Options</td>
+              <td class="p-3 text-[var(--muted-foreground)]">20 contracts ($100 Put @ $5/sh)</td>
+              <td class="p-3">$95 (-5%)</td>
+              <td class="p-3 font-bold text-emerald-500">$40,000 (+$30k) ★</td>
+              <td class="p-3 font-bold text-emerald-500 bg-orange-500/5">$20,000 (+$10k / +100%)</td>
+              <td class="p-3 text-rose-500 font-semibold">$0 (-$10k)</td>
+              <td class="p-3 text-rose-500 font-semibold">$0 (-$10k)</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-emerald-500">2. Bear Put Spread</td>
+              <td class="p-3 text-[var(--muted-foreground)]">25 spreads ($100/$90 cap @ $4/sh)</td>
+              <td class="p-3">$96 (-4%)</td>
+              <td class="p-3 text-emerald-500">$25,000 (+$15k)</td>
+              <td class="p-3 font-bold text-emerald-500 bg-orange-500/5">$25,000 (+$15k / +150%) ★</td>
+              <td class="p-3 text-rose-500 font-semibold">$0 (-$10k)</td>
+              <td class="p-3 text-rose-500 font-semibold">$0 (-$10k)</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-blue-500">3. Sell a Call</td>
+              <td class="p-3 text-[var(--muted-foreground)]">1 contract ($100 Call, collect $500)</td>
+              <td class="p-3">$105 (+5%)</td>
+              <td class="p-3 text-emerald-500">$10,500 (+$500)</td>
+              <td class="p-3 font-bold text-emerald-500 bg-orange-500/5">$10,500 (+$500 / +5%)</td>
+              <td class="p-3 font-bold text-emerald-500">$10,500 (+$500) ★</td>
+              <td class="p-3 text-rose-500">$9,500 (-$500)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 5: FAMILY 3 - OWN STOCK ALREADY (INCOME & CRASH INSURANCE) -->
+    <section class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-5">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border)] pb-3">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-blue-500">Family 3 • Stock Owner Playbook</span>
+          <h2 class="text-xl font-bold mt-0.5">When You Already Own 100 Shares ($10,000): Rent &amp; Crash Insurance</h2>
+        </div>
+        <button onclick="setMode('income'); document.getElementById('simulator-section').scrollIntoView({behavior:'smooth'});"
+          class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-[var(--border)] hover:bg-[var(--background)] transition">
+          Load Income &amp; Hedges in Simulator ↑
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 text-xs leading-relaxed">
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 space-y-1.5">
+          <div class="font-bold text-sm text-emerald-500">1. Covered Call ("Rent Out Your Shares")</div>
+          <p class="text-[var(--muted-foreground)]">
+            You own 100 boxes of Lego at $100. You sell someone a <strong>$110 Call coupon for $300 cash</strong>. If Google stays below $110 this month, you keep your 100 shares AND pocket the <strong>+$300 rent</strong>. If Google rises past $110, you sell your shares at $110 (+$1,000 gain) plus keep the $300 rent (<strong>+$1,300 total / +13%</strong>).
+          </p>
+        </div>
+
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 space-y-1.5">
+          <div class="font-bold text-sm text-blue-500">2. Protective Put ("Crash Insurance")</div>
+          <p class="text-[var(--muted-foreground)]">
+            You own 100 shares at $100 and are scared of a crash, so you pay <strong>$300 for a $95 Put coupon</strong>. If Google crashes to $70 (-30%), your Put guarantees you can sell your shares for $95 - capping your worst-case loss at <strong>-$800 (-8%)</strong> while keeping unlimited upside if Google rallies!
+          </p>
+        </div>
+
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 space-y-1.5">
+          <div class="font-bold text-sm text-purple-500">3. The Collar ("Free Crash Insurance")</div>
+          <p class="text-[var(--muted-foreground)]">
+            Combine both! You collect <strong>+$300 rent</strong> by selling a $110 Call, and immediately spend that <strong>$300</strong> to buy a $95 Put. Net option cost: <strong>$0</strong>. Your 100 shares now have a guaranteed floor at $95 (-$500 max loss) and a cap at $110 (+$1,000 max gain).
+          </p>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto border border-[var(--border)] rounded-xl">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="bg-[var(--background)] border-b border-[var(--border)] text-[var(--muted-foreground)]">
+              <th class="p-3 font-semibold">Stock Owner Strategy ($10,000 in Shares)</th>
+              <th class="p-3 font-semibold">Option Added</th>
+              <th class="p-3 font-semibold">If Crash -20% ($80)</th>
+              <th class="p-3 font-semibold">If Flat 0% ($100)</th>
+              <th class="p-3 font-semibold bg-blue-500/10 text-blue-500">If Up +10% ($110)</th>
+              <th class="p-3 font-semibold">If Up +20% ($120)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[var(--border)]">
+            <tr>
+              <td class="p-3 font-bold">0. Just Hold 100 Shares</td>
+              <td class="p-3 text-[var(--muted-foreground)]">None (Unhedged)</td>
+              <td class="p-3 text-rose-500">$8,000 (-$2,000)</td>
+              <td class="p-3">$10,000 ($0)</td>
+              <td class="p-3 text-emerald-500 bg-blue-500/5">$11,000 (+$1,000)</td>
+              <td class="p-3 font-bold text-emerald-500">$12,000 (+$2,000) ★</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-emerald-500">1. Covered Call (Rent)</td>
+              <td class="p-3 text-[var(--muted-foreground)]">Sell $110 Call (+$300 cash)</td>
+              <td class="p-3 text-rose-500">$8,300 (-$1,700)</td>
+              <td class="p-3 font-bold text-emerald-500">$10,300 (+$300) ★</td>
+              <td class="p-3 font-bold text-emerald-500 bg-blue-500/5">$11,300 (+$1,300) ★</td>
+              <td class="p-3 text-emerald-500">$11,300 (+$1,300 cap)</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-blue-500">2. Protective Put (Hedge)</td>
+              <td class="p-3 text-[var(--muted-foreground)]">Buy $95 Put (-$300 cost)</td>
+              <td class="p-3 font-bold text-rose-500">$9,200 (-$800 floor)</td>
+              <td class="p-3 text-rose-500">$9,700 (-$300)</td>
+              <td class="p-3 text-emerald-500 bg-blue-500/5">$10,700 (+$700)</td>
+              <td class="p-3 text-emerald-500">$11,700 (+$1,700)</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-purple-500">3. The Collar (Zero-Cost)</td>
+              <td class="p-3 text-[var(--muted-foreground)]">Sell $110 Call + Buy $95 Put ($0)</td>
+              <td class="p-3 font-bold text-rose-500">$9,500 (-$500 floor) ★</td>
+              <td class="p-3">$10,000 ($0)</td>
+              <td class="p-3 text-emerald-500 bg-blue-500/5">$11,000 (+$1,000)</td>
+              <td class="p-3 text-emerald-500">$11,000 (+$1,000 cap)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 6: FAMILY 4 - VOLATILITY (EXPLOSION VS FLAT) -->
+    <section class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-5">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border)] pb-3">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-purple-500">Family 4 • Volatility Playbook</span>
+          <h2 class="text-xl font-bold mt-0.5">When You Don't Know the Direction: Straddles &amp; Iron Condors</h2>
+        </div>
+        <button onclick="setMode('volatility'); document.getElementById('simulator-section').scrollIntoView({behavior:'smooth'});"
+          class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-[var(--border)] hover:bg-[var(--background)] transition">
+          Load Volatility in Simulator ↑
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 text-xs leading-relaxed">
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 space-y-1.5">
+          <div class="font-bold text-sm text-orange-500">1. Long Straddle ("Bet on an Explosion")</div>
+          <p class="text-[var(--muted-foreground)]">
+            A huge court ruling is tomorrow. Google will either rocket +20% or crash -20%, you just don't know which. You buy <strong>both a $100 Call ($5) and a $100 Put ($5)</strong> for $10 total (1,000 pairs with $10,000). If Google moves more than 10% in <em>either</em> direction, you win big! At -20% ($80) or +20% ($120), your $10,000 turns into <strong>$20,000 (+$10,000 profit)</strong>.
+          </p>
+        </div>
+
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 space-y-1.5">
+          <div class="font-bold text-sm text-blue-500">2. Long Strangle ("Cheaper Explosion Bet")</div>
+          <p class="text-[var(--muted-foreground)]">
+            Same idea as a Straddle, but you buy cheaper out-of-the-money coupons: a <strong>$105 Call ($2.50) + $95 Put ($2.50)</strong> for $5 total (2,000 pairs with $10,000). Because you control twice as many shares, a ±20% move ($80 or $120) turns $10,000 into <strong>$30,000 (+$20,000 profit / +200%)</strong>!
+          </p>
+        </div>
+
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 space-y-1.5">
+          <div class="font-bold text-sm text-emerald-500">3. Iron Condor ("Bet It Goes Nowhere")</div>
+          <p class="text-[var(--muted-foreground)]">
+            You think Google will stay boring between <strong>$90 and $110</strong> all month. You sell a Put Spread below $90 and a Call Spread above $110, collecting <strong>+$4,000 upfront</strong> on $10,000 of collateral. If Google finishes anywhere inside the $90-$110 goalposts, all coupons expire worthless and you keep the <strong>+$4,000 (+40%)</strong>!
+          </p>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto border border-[var(--border)] rounded-xl">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="bg-[var(--background)] border-b border-[var(--border)] text-[var(--muted-foreground)]">
+              <th class="p-3 font-semibold">Volatility Strategy ($10,000 Bet)</th>
+              <th class="p-3 font-semibold">How You Win</th>
+              <th class="p-3 font-semibold bg-purple-500/10 text-purple-500">If Crash -20% ($80)</th>
+              <th class="p-3 font-semibold">If Drops -10% ($90)</th>
+              <th class="p-3 font-semibold bg-emerald-500/10 text-emerald-500">If Flat 0% ($100)</th>
+              <th class="p-3 font-semibold">If Up +10% ($110)</th>
+              <th class="p-3 font-semibold bg-purple-500/10 text-purple-500">If Up +20% ($120)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[var(--border)]">
+            <tr>
+              <td class="p-3 font-bold text-orange-500">1. Long Straddle</td>
+              <td class="p-3 text-[var(--muted-foreground)]">Move &gt; ±10% (&lt;$90 or &gt;$110)</td>
+              <td class="p-3 font-bold text-emerald-500 bg-purple-500/5">$20,000 (+$10k)</td>
+              <td class="p-3">$10,000 ($0 BE)</td>
+              <td class="p-3 text-rose-500 font-semibold bg-emerald-500/5">$0 (-$10k)</td>
+              <td class="p-3">$10,000 ($0 BE)</td>
+              <td class="p-3 font-bold text-emerald-500 bg-purple-500/5">$20,000 (+$10k)</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-blue-500">2. Long Strangle</td>
+              <td class="p-3 text-[var(--muted-foreground)]">Big move &gt; ±10% (&lt;$90 or &gt;$110)</td>
+              <td class="p-3 font-bold text-emerald-500 bg-purple-500/5">$30,000 (+$20k) ★</td>
+              <td class="p-3">$10,000 ($0 BE)</td>
+              <td class="p-3 text-rose-500 font-semibold bg-emerald-500/5">$0 (-$10k)</td>
+              <td class="p-3">$10,000 ($0 BE)</td>
+              <td class="p-3 font-bold text-emerald-500 bg-purple-500/5">$30,000 (+$20k) ★</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-emerald-500">3. Iron Condor</td>
+              <td class="p-3 text-[var(--muted-foreground)]">Stays between $86 and $114</td>
+              <td class="p-3 text-rose-500 bg-purple-500/5">$4,000 (-$6k max)</td>
+              <td class="p-3 font-bold text-emerald-500">$14,000 (+$4k) ★</td>
+              <td class="p-3 font-bold text-emerald-500 bg-emerald-500/5">$14,000 (+$4k / +40%) ★</td>
+              <td class="p-3 font-bold text-emerald-500">$14,000 (+$4k) ★</td>
+              <td class="p-3 text-rose-500 bg-purple-500/5">$4,000 (-$6k max)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 7: THE 3 GOLDEN RULES -->
+    <section class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-4">
+      <h2 class="text-lg font-bold">3 Golden Rules Before Placing Your First Options Trade</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs leading-relaxed">
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 space-y-1">
+          <div class="font-bold text-sm">1. The 90/10 Sizing Trick</div>
+          <p class="text-[var(--muted-foreground)]">
+            Never put 100% of your $10,000 into Call or Put coupons. If you keep <strong>$9,000 in safe cash</strong> and put just <strong>$1,000 into Calls</strong>, a +20% move in Google still makes you <strong>+$3,000</strong> (more than owning $10,000 of stock!), while your absolute worst-case loss is strictly capped at $1,000.
+          </p>
+        </div>
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 space-y-1">
+          <div class="font-bold text-sm">2. Match the Strategy to the Move Size</div>
+          <p class="text-[var(--muted-foreground)]">
+            Expecting a <strong>moderate move (5% to 12%)</strong>? Use a <strong>Spread</strong> (Bull Call Spread or Bear Put Spread) so your coupon is cheaper and your breakeven is closer. Expecting a <strong>massive 20%+ breakout or crash</strong>? Use plain <strong>Calls, Puts, or a Strangle</strong> so your upside isn't capped.
+          </p>
+        </div>
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 space-y-1">
+          <div class="font-bold text-sm">3. Buy Enough Time (60+ Days)</div>
+          <p class="text-[var(--muted-foreground)]">
+            Options melt like ice cubes as expiration approaches (called <strong>Theta / Time Decay</strong>), especially in the final 30 days. Buying 60 to 180 days of time gives your thesis room to play out, and remember: you can sell your option for a profit on any day before expiration.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Ensure standalone browsers (outside Antigravity) get clean theme variables automatically
+    (function ensureStandaloneTheme() {
+      const rootStyle = getComputedStyle(document.documentElement);
+      if (!rootStyle.getPropertyValue('--card').trim()) {
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const s = document.documentElement.style;
+        if (prefersDark) {
+          s.setProperty('--background', '#0b0f19');
+          s.setProperty('--card', '#111827');
+          s.setProperty('--foreground', '#f8fafc');
+          s.setProperty('--muted-foreground', '#94a3b8');
+          s.setProperty('--border', '#1e293b');
+          s.setProperty('--primary', '#3b82f6');
+          s.setProperty('--primary-foreground', '#ffffff');
+        } else {
+          s.setProperty('--background', '#f8fafc');
+          s.setProperty('--card', '#ffffff');
+          s.setProperty('--foreground', '#0f172a');
+          s.setProperty('--muted-foreground', '#64748b');
+          s.setProperty('--border', '#e2e8f0');
+          s.setProperty('--primary', '#2563eb');
+          s.setProperty('--primary-foreground', '#ffffff');
+        }
+      }
+    })();
+
+    const ZERO_PCT = 33;
+    const MAX_LOSS = 10000;
+    const MAX_PROFIT = 50000;
+
+    let currentMode = 'bullish';
+    let currentPrice = 120;
+    let selectedStrategyIdx = 1;
+
+    const catalog = {
+      bullish: [
+        {
+          id: 'long_stock',
+          name: '0. Buy the Stock',
+          shortLabel: 'Buy Stock',
+          color: '#94a3b8',
+          subtitle: '100 shares @ $100',
+          breakeven: '$100 (0%)',
+          eli5: 'You buy 100 shares outright at $100 each. No expiration date, no time decay.',
+          calc: (p) => {
+            const endVal = 100 * p;
+            return { endVal, profit: endVal - 10000 };
+          },
+          verdict: (p, profit) => `Steady 1-to-1 move (${fmtMoney(profit)}) with no expiration clock - you never lose 100% if the move takes longer.`
+        },
+        {
+          id: 'long_call',
+          name: '1. Buy Call Options',
+          shortLabel: 'Buy Calls',
+          color: '#3b82f6',
+          subtitle: '20 contracts ($100 Call @ $5/sh)',
+          breakeven: '$105 (+5%)',
+          eli5: 'You buy 2,000 "Price-Lock Coupons" for $5 each that let you buy Google for $100 even if it rockets to $120+.',
+          calc: (p) => {
+            const intrinsic = Math.max(0, p - 100);
+            const endVal = 2000 * intrinsic;
+            return { endVal, profit: endVal - 10000 };
+          },
+          verdict: (p, profit) => {
+            if (p >= 115) return `🎯 #1 Winner on big rallies (+15% or more)! Uncapped upside turns $10k into $${Math.round(10000+profit).toLocaleString()}.`;
+            if (p > 105) return `Profitable (${fmtMoney(profit)}), though Bull Call Spread beats it until Google passes $112.50.`;
+            return `Needs at least +5% ($105) just to pay back the $5 coupon fee (${fmtMoney(profit)}).`;
+          }
+        },
+        {
+          id: 'bull_spread',
+          name: '2. Bull Call Spread',
+          shortLabel: 'Bull Spread',
+          color: '#10b981',
+          subtitle: '25 spreads ($100/$110 cap @ $4/sh)',
+          breakeven: '$104 (+4%)',
+          eli5: 'You buy the $100 Call ($5) and sell the $110 Call ($1) to lower your cost to $4/sh. Capped at $110 (+10%).',
+          calc: (p) => {
+            const spreadVal = Math.min(10, Math.max(0, p - 100));
+            const endVal = 2500 * spreadVal;
+            return { endVal, profit: endVal - 10000 };
+          },
+          verdict: (p, profit) => {
+            if (p >= 105 && p <= 112) return `🎯 #1 Winner for a moderate (+10%) rally! Cheaper $4 entry makes +$15,000 at $110 vs +$10,000 on plain Calls.`;
+            if (p > 112) return `Locked at its +$15,000 (+150%) ceiling above $110 while uncapped Calls keep climbing.`;
+            return `Expires worthless (-$10,000) if Google finishes at or below $100.`;
+          }
+        },
+        {
+          id: 'short_put',
+          name: '3. Sell Put (Insurance)',
+          shortLabel: 'Sell Put',
+          color: '#a855f7',
+          subtitle: '1 contract ($100 strike, collect $500)',
+          breakeven: '$95 (-5%)',
+          eli5: 'Someone pays you $500 cash today for your promise to buy 100 shares at $100 if Google drops.',
+          calc: (p) => {
+            const lossIfDrop = Math.max(0, 100 - p) * 100;
+            const endVal = 10000 + 500 - lossIfDrop;
+            return { endVal, profit: endVal - 10000 };
+          },
+          verdict: (p, profit) => p >= 100
+            ? `Wins +$500 (+5%) even if Google goes nowhere ($100), where Call and Spread buyers lose 100%.`
+            : `Your $500 fee cushions the drop down to $95 breakeven (${fmtMoney(profit)}).`
+        }
+      ],
+      bearish: [
+        {
+          id: 'short_stock',
+          name: '0. Short the Stock',
+          shortLabel: 'Short Stock',
+          color: '#94a3b8',
+          subtitle: 'Borrow & sell 100 sh @ $100',
+          breakeven: '$100 (0%)',
+          eli5: 'You borrow 100 Lego boxes and sell them for $100 today, hoping to buy them back cheaper later.',
+          calc: (p) => {
+            const profit = (100 - p) * 100;
+            return { endVal: 10000 + profit, profit };
+          },
+          verdict: (p, profit) => p < 100
+            ? `Makes a steady dollar-for-dollar gain (${fmtMoney(profit)}), but carries unlimited risk if Google spikes upward.`
+            : `Because Google didn't drop below $100, you have to buy back the shares at a higher price (${fmtMoney(profit)}).`
+        },
+        {
+          id: 'long_put',
+          name: '1. Buy Put Options',
+          shortLabel: 'Buy Puts',
+          color: '#f97316',
+          subtitle: '20 contracts ($100 Put @ $5/sh)',
+          breakeven: '$95 (-5%)',
+          eli5: 'You buy 2,000 "Price-Floor Coupons" for $5 each that force someone to buy Google from you at $100.',
+          calc: (p) => {
+            const intrinsic = Math.max(0, 100 - p);
+            const endVal = 2000 * intrinsic;
+            return { endVal, profit: endVal - 10000 };
+          },
+          verdict: (p, profit) => {
+            if (p <= 85) return `Home-run crash play! Because Puts aren't capped, a big drop turns $10k into $${Math.round(10000+profit).toLocaleString()}.`;
+            if (p <= 90) return `Doubles your money (+$10k) at -10%, though the first 5% drop ($100 to $95) just paid back your $5 coupon fee.`;
+            if (p < 100) return `Google dropped, but not enough to beat the $95 breakeven yet (${fmtMoney(profit)}).`;
+            return `Google stayed at or above $100, so your $100 Put coupons expire worthless (-$10,000 max loss).`;
+          }
+        },
+        {
+          id: 'bear_spread',
+          name: '2. Bear Put Spread',
+          shortLabel: 'Bear Spread',
+          color: '#10b981',
+          subtitle: '25 spreads ($100/$90 cap @ $4/sh)',
+          breakeven: '$96 (-4%)',
+          eli5: 'You buy the $100 Put ($5) and sell the $90 Put ($1) to cut your coupon cost to $4. Capped at $90 (-10%).',
+          calc: (p) => {
+            const spreadVal = Math.min(10, Math.max(0, 100 - p));
+            const endVal = 2500 * spreadVal;
+            return { endVal, profit: endVal - 10000 };
+          },
+          verdict: (p, profit) => {
+            if (p === 90) return `🎯 #1 Winner for a -10% drop! Selling the $90 floor made your coupons cheaper, paying +$15,000 (+150%) vs +$10,000 on plain Puts.`;
+            if (p < 90) return `Capped at +$15,000 (+150%) once Google hits $90. Plain Puts overtake it only on crashes past -12.5% ($87.50).`;
+            if (p < 100) return `Lower breakeven ($96 vs $95) means you lose less or profit sooner on a mild dip (${fmtMoney(profit)}).`;
+            return `Google didn't drop below $100, so the spread expires worthless (-$10,000).`;
+          }
+        },
+        {
+          id: 'short_call',
+          name: '3. Sell Call (Insurance)',
+          shortLabel: 'Sell Call',
+          color: '#3b82f6',
+          subtitle: '1 contract ($100 strike, collect $500)',
+          breakeven: '$105 (+5%)',
+          eli5: 'You act like the house: someone pays you $500 cash today for a $100 Call coupon. If Google drops or stays flat, you keep the $500.',
+          calc: (p) => {
+            const lossIfRise = Math.max(0, p - 100) * 100;
+            const endVal = 10000 + 500 - lossIfRise;
+            return { endVal, profit: endVal - 10000 };
+          },
+          verdict: (p, profit) => p <= 100
+            ? `High-probability win: you keep the full +$500 (+5%) whether Google drops 20%, drops 1%, or stays completely flat at $100.`
+            : `Even though Google rose, your $500 upfront fee cushions you until $105 (${fmtMoney(profit)}).`
+        }
+      ],
+      income: [
+        {
+          id: 'hold_shares',
+          name: '0. Just Hold 100 Shares',
+          shortLabel: 'Hold Shares',
+          color: '#94a3b8',
+          subtitle: '100 shares @ $100 (Unhedged)',
+          breakeven: '$100 (0%)',
+          eli5: 'You hold your 100 shares with no options attached. Full upside, full downside.',
+          calc: (p) => {
+            const endVal = 100 * p;
+            return { endVal, profit: endVal - 10000 };
+          },
+          verdict: (p, profit) => `Moves dollar-for-dollar with Google (${fmtMoney(profit)}). Beats Covered Calls only if Google surges past $113.`
+        },
+        {
+          id: 'covered_call',
+          name: '1. Covered Call (Collect Rent)',
+          shortLabel: 'Covered Call',
+          color: '#10b981',
+          subtitle: '100 sh + Sell $110 Call (+$300 rent)',
+          breakeven: '$97 (-3%)',
+          eli5: 'You own 100 shares and sell someone a $110 Call coupon for $300 cash today. You keep the $300 no matter what!',
+          calc: (p) => {
+            const stockVal = 100 * Math.min(110, p);
+            const endVal = stockVal + 300;
+            return { endVal, profit: endVal - 10000 };
+          },
+          verdict: (p, profit) => p <= 113
+            ? `🎯 Beats holding plain stock everywhere up to $113 because of the extra +$300 rent collected (${fmtMoney(profit)})!`
+            : `Capped at +$1,300 (+13%) because your 100 shares get called away at $110 plus your $300 rent.`
+        },
+        {
+          id: 'protective_put',
+          name: '2. Protective Put (Crash Hedge)',
+          shortLabel: 'Protective Put',
+          color: '#3b82f6',
+          subtitle: '100 sh + Buy $95 Put (-$300 cost)',
+          breakeven: '$103 (+3%)',
+          eli5: 'You own 100 shares and spend $300 on a $95 Put coupon as crash insurance. You can never lose more than -$800.',
+          calc: (p) => {
+            const stockVal = 100 * Math.max(95, p);
+            const endVal = stockVal - 300;
+            return { endVal, profit: endVal - 10000 };
+          },
+          verdict: (p, profit) => p < 92
+            ? `🎯 Crash insurance kicks in! While unhedged stock loses $${(100-p)*100}, your loss is strictly frozen at -$800.`
+            : `Participates in all upside above $103 minus the $300 insurance cost (${fmtMoney(profit)}).`
+        },
+        {
+          id: 'collar',
+          name: '3. The Collar (Free Insurance)',
+          shortLabel: 'The Collar',
+          color: '#a855f7',
+          subtitle: '100 sh + Sell $110 Call / Buy $95 Put ($0)',
+          breakeven: '$100 (0%)',
+          eli5: 'You use the +$300 rent from a $110 Covered Call to pay for the -$300 cost of a $95 Protective Put. Zero out-of-pocket cost!',
+          calc: (p) => {
+            const cappedPrice = Math.min(110, Math.max(95, p));
+            const endVal = 100 * cappedPrice;
+            return { endVal, profit: endVal - 10000 };
+          },
+          verdict: (p, profit) => p < 95
+            ? `🎯 Best crash protection! Because the insurance was paid for by the Call, your max loss is only -$500 (-5%).`
+            : `Protected below $95 and capped above $110 (${fmtMoney(profit)}).`
+        }
+      ],
+      volatility: [
+        {
+          id: 'straddle',
+          name: '1. Long Straddle (Explode Either Way)',
+          shortLabel: 'Long Straddle',
+          color: '#f97316',
+          subtitle: '10 pairs: Buy $100 Call + $100 Put (@ $10/pair)',
+          breakeven: '$90 (-10%) or $110 (+10%)',
+          eli5: 'You buy BOTH a $100 Call ($5) and a $100 Put ($5). You don\'t care if Google goes up or down - you just need a big move!',
+          calc: (p) => {
+            const move = Math.abs(p - 100);
+            const endVal = 1000 * move;
+            return { endVal, profit: endVal - 10000 };
+          },
+          verdict: (p, profit) => Math.abs(p - 100) > 10
+            ? `Big move paid off! A ${Math.abs(p-100)}% move turns your $10,000 Straddle into $${Math.round(10000+profit).toLocaleString()} (${fmtMoney(profit)}).`
+            : `Google didn't move past the ±10% ($90/$110) breakevens, so the $10 pair fee isn't covered yet (${fmtMoney(profit)}).`
+        },
+        {
+          id: 'strangle',
+          name: '2. Long Strangle (Cheaper Explosion Bet)',
+          shortLabel: 'Long Strangle',
+          color: '#3b82f6',
+          subtitle: '20 pairs: Buy $105 Call + $95 Put (@ $5/pair)',
+          breakeven: '$90 (-10%) or $110 (+10%)',
+          eli5: 'You buy cheaper out-of-the-money coupons ($105 Call + $95 Put for $5 total), doubling your contracts to 2,000 shares.',
+          calc: (p) => {
+            const payoutPerShare = Math.max(0, p - 105) + Math.max(0, 95 - p);
+            const endVal = 2000 * payoutPerShare;
+            return { endVal, profit: endVal - 10000 };
+          },
+          verdict: (p, profit) => Math.abs(p - 100) >= 15
+            ? `🎯 #1 Volatility Winner on huge moves! Controlling 2,000 shares turns $10k into $${Math.round(10000+profit).toLocaleString()} (${fmtMoney(profit)}).`
+            : `Expires worthless (-$10,000) if Google finishes between $95 and $105; needs > ±10% to profit.`
+        },
+        {
+          id: 'iron_condor',
+          name: '3. Iron Condor (Bet Stock Stays Flat)',
+          shortLabel: 'Iron Condor',
+          color: '#10b981',
+          subtitle: '10 condors: Sell $90/$80 Put & $110/$120 Call (+$4k)',
+          breakeven: 'Between $86 (-14%) & $114 (+14%)',
+          eli5: 'You act like the house on BOTH sides: you collect +$4,000 cash upfront and keep it all if Google stays between $90 and $110.',
+          calc: (p) => {
+            const lossPerShare = Math.min(10, Math.max(0, p - 110) + Math.max(0, 90 - p));
+            const profit = 4000 - 1000 * lossPerShare;
+            return { endVal: 10000 + profit, profit };
+          },
+          verdict: (p, profit) => (p >= 90 && p <= 110)
+            ? `🎯 #1 Winner in a calm market! Google stayed inside the $90-$110 goalposts, so you keep the full +$4,000 (+40%)!`
+            : `Google broke outside the $90-$110 range, eating into your $4,000 fee (max loss capped at -$6,000).`
+        },
+        {
+          id: 'vol_stock',
+          name: '0. Buy Stock (Baseline)',
+          shortLabel: 'Buy Stock',
+          color: '#94a3b8',
+          subtitle: '100 shares @ $100',
+          breakeven: '$100 (0%)',
+          eli5: 'Standard 100 shares of Google for comparison.',
+          calc: (p) => {
+            const endVal = 100 * p;
+            return { endVal, profit: endVal - 10000 };
+          },
+          verdict: (p, profit) => `Linear stock return (${fmtMoney(profit)}) - only profits if Google goes UP.`
+        }
+      ],
+      versus: [
+        {
+          id: 'v_call',
+          name: '📈 Buy Call Options (Uncapped Up)',
+          shortLabel: 'Buy Calls',
+          color: '#3b82f6',
+          subtitle: '20 contracts ($100 Call @ $5) • BE: $105',
+          breakeven: '$105 (+5%)',
+          eli5: 'Bets on a big rally UP (> +5%). Unlimited upside if Google surges; loses 100% if flat or down.',
+          calc: (p) => {
+            const endVal = 2000 * Math.max(0, p - 100);
+            return { endVal, profit: endVal - 10000 };
+          },
+          verdict: (p, profit) => `Call Options pay off when Google rallies hard past $105 (${fmtMoney(profit)}).`
+        },
+        {
+          id: 'v_bull_spread',
+          name: '📈 Bull Call Spread (Up +10% Cap)',
+          shortLabel: 'Bull Spread',
+          color: '#10b981',
+          subtitle: '25 spreads ($100/$110 @ $4) • BE: $104',
+          breakeven: '$104 (+4%)',
+          eli5: 'Bets on a moderate +10% rise to $110. Peaks at +$15,000 (+150%) at $110.',
+          calc: (p) => {
+            const endVal = 2500 * Math.min(10, Math.max(0, p - 100));
+            return { endVal, profit: endVal - 10000 };
+          },
+          verdict: (p, profit) => `Bull Call Spread is built for a +10% target ($110), capping out at +$15,000 (${fmtMoney(profit)}).`
+        },
+        {
+          id: 'v_bear_spread',
+          name: '📉 Bear Put Spread (Down -10% Cap)',
+          shortLabel: 'Bear Spread',
+          color: '#f59e0b',
+          subtitle: '25 spreads ($100/$90 @ $4) • BE: $96',
+          breakeven: '$96 (-4%)',
+          eli5: 'Exact mirror image of Bull Spread: bets on a -10% drop to $90, peaking at +$15,000 (+150%).',
+          calc: (p) => {
+            const endVal = 2500 * Math.min(10, Math.max(0, 100 - p));
+            return { endVal, profit: endVal - 10000 };
+          },
+          verdict: (p, profit) => `Bear Put Spread is built for a -10% drop ($90), capping out at +$15,000 (${fmtMoney(profit)}).`
+        },
+        {
+          id: 'v_put',
+          name: '📉 Buy Put Options (Uncapped Down)',
+          shortLabel: 'Buy Puts',
+          color: '#f97316',
+          subtitle: '20 contracts ($100 Put @ $5) • BE: $95',
+          breakeven: '$95 (-5%)',
+          eli5: 'Exact mirror image of Calls: bets on a big crash DOWN (< -5%). Turns $10k into $40k at -20% ($80).',
+          calc: (p) => {
+            const endVal = 2000 * Math.max(0, 100 - p);
+            return { endVal, profit: endVal - 10000 };
+          },
+          verdict: (p, profit) => `Put Options pay off massively when Google drops past $95 (${fmtMoney(profit)}).`
+        }
+      ]
+    };
+
+    function fmtMoney(n) {
+      const sign = n > 0 ? '+' : (n < 0 ? '-' : '');
+      return sign + '$' + Math.abs(Math.round(n)).toLocaleString();
+    }
+
+    function setMode(mode) {
+      currentMode = mode;
+      if (mode === 'bullish') {
+        selectedStrategyIdx = 1;
+        setMove(20);
+      } else if (mode === 'bearish') {
+        selectedStrategyIdx = 2;
+        setMove(-10);
+      } else if (mode === 'income') {
+        selectedStrategyIdx = 1;
+        setMove(10);
+      } else if (mode === 'volatility') {
+        selectedStrategyIdx = 2; // Iron Condor at 0% flat, or Straddle
+        setMove(0);
+      } else {
+        selectedStrategyIdx = 2;
+        setMove(-10);
+      }
+    }
+
+    function setMove(pct) {
+      const price = 100 + pct;
+      document.getElementById('price-slider').value = price;
+      updatePrice(price);
+    }
+
+    function selectStrategy(idx) {
+      selectedStrategyIdx = idx;
+      renderAll();
+    }
+
+    function updatePrice(val) {
+      currentPrice = Math.max(70, Math.min(130, Math.round(Number(val))));
+      document.getElementById('price-slider').value = currentPrice;
+      renderAll();
+    }
+
+    function renderSVGChart(list, p) {
+      const svg = document.getElementById('payoff-svg');
+      const W = 280, H = 185;
+      const padL = 42, padR = 14, padT = 12, padB = 24;
+      const plotW = W - padL - padR;
+      const plotH = H - padT - padB;
+
+      // Dynamic Y range based on mode so Income/Hedge (-$3k to +$3k) and Volatility (-$10k to +$40k) both look super crisp!
+      let yMin = -12000, yMax = 50000;
+      if (currentMode === 'income') {
+        yMin = -3500;
+        yMax = 3500;
+      } else if (currentMode === 'volatility') {
+        yMin = -12000;
+        yMax = 42000;
+      }
+
+      const xToPx = (price) => padL + ((price - 70) / 60) * plotW;
+      const yToPx = (profit) => padT + ((yMax - Math.max(yMin, Math.min(yMax, profit))) / (yMax - yMin)) * plotH;
+
+      const startX = xToPx(100);
+      const curX = xToPx(p);
+
+      let html = '';
+
+      const ticks = currentMode === 'income'
+        ? [-3000, -1500, 0, 1500, 3000]
+        : (currentMode === 'volatility' ? [-10000, 0, 15000, 30000, 40000] : [-10000, 0, 15000, 30000, 50000]);
+
+      ticks.forEach(val => {
+        const y = yToPx(val);
+        const isZero = val === 0;
+        html += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="currentColor" stroke-opacity="${isZero ? '0.35' : '0.1'}" stroke-dasharray="${isZero ? '' : '2,2'}" stroke-width="${isZero ? '1.2' : '1'}" />`;
+        const label = val === 0 ? '$0' : (val > 0 ? `+${val/1000}k` : `${val/1000}k`);
+        html += `<text x="${padL - 5}" y="${y + 4}" text-anchor="end" fill="currentColor" opacity="0.65" font-size="12">${label}</text>`;
+      });
+
+      [70, 90, 100, 110, 130].forEach(price => {
+        const x = xToPx(price);
+        html += `<text x="${x}" y="${H - 4}" text-anchor="middle" fill="currentColor" opacity="0.7" font-size="12">$${price}</text>`;
+      });
+
+      html += `<line x1="${startX}" y1="${padT}" x2="${startX}" y2="${H - padB}" stroke="currentColor" stroke-opacity="0.15" stroke-dasharray="2,2" />`;
+
+      list.forEach((s, idx) => {
+        const pts = [];
+        for (let price = 70; price <= 130; price += 1) {
+          const { profit } = s.calc(price);
+          pts.push(`${xToPx(price).toFixed(1)},${yToPx(profit).toFixed(1)}`);
+        }
+        const isSel = idx === selectedStrategyIdx;
+        html += `<polyline fill="none" stroke="${s.color}" stroke-width="${isSel ? '2.8' : '1.6'}" stroke-opacity="${isSel ? '1' : '0.55'}" points="${pts.join(' ')}" />`;
+      });
+
+      html += `<line x1="${curX}" y1="${padT}" x2="${curX}" y2="${H - padB}" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.5" />`;
+
+      list.forEach((s, idx) => {
+        const { profit } = s.calc(p);
+        const cy = yToPx(profit);
+        const isSel = idx === selectedStrategyIdx;
+        html += `<circle cx="${curX}" cy="${cy}" r="${isSel ? '4.5' : '3.2'}" fill="${s.color}" stroke="var(--card)" stroke-width="1.5" />`;
+      });
+
+      svg.innerHTML = html;
+
+      const legend = document.getElementById('chart-legend');
+      legend.innerHTML = list.map((s, idx) => `
+        <button onclick="selectStrategy(${idx})" class="flex items-center gap-1 hover:opacity-80 ${idx === selectedStrategyIdx ? 'font-bold underline' : 'opacity-75'}">
+          <span class="inline-block w-2.5 h-2.5 rounded-full" style="background:${s.color}"></span>
+          <span>${s.shortLabel}</span>
+        </button>
+      `).join('');
+    }
+
+    function renderAll() {
+      const p = currentPrice;
+      const pct = p - 100;
+      const pctStr = (pct >= 0 ? '+' : '') + pct + '%';
+      document.getElementById('price-readout').textContent = `$${p} (${pctStr})`;
+
+      ['bullish', 'bearish', 'income', 'volatility', 'versus'].forEach(m => {
+        const btn = document.getElementById(`mode-${m}`);
+        if (m === currentMode) {
+          btn.className = 'px-2.5 py-1.5 text-xs font-semibold rounded-md bg-[var(--primary)] text-[var(--primary-foreground)] shadow-sm transition';
+        } else {
+          btn.className = 'px-2.5 py-1.5 text-xs font-medium rounded-md text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition';
+        }
+      });
+
+      [-20, -10, 0, 10, 20].forEach(preset => {
+        const btn = document.getElementById(`btn-${preset}`);
+        if (btn) {
+          if (pct === preset) {
+            btn.className = 'px-2.5 py-1 text-xs font-semibold rounded-md bg-[var(--primary)] text-[var(--primary-foreground)] transition';
+          } else {
+            btn.className = 'px-2.5 py-1 text-xs font-medium rounded-md border border-[var(--border)] text-[var(--foreground)] hover:opacity-80 transition';
+          }
+        }
+      });
+
+      const list = catalog[currentMode];
+
+      let maxProfitAtP = -Infinity;
+      list.forEach(s => {
+        const { profit } = s.calc(p);
+        if (profit > maxProfitAtP) maxProfitAtP = profit;
+      });
+
+      const container = document.getElementById('rows-container');
+      container.innerHTML = list.map((s, idx) => {
+        const { endVal, profit } = s.calc(p);
+        const roi = Math.round((profit / 10000) * 100);
+        const roiStr = (roi >= 0 ? '+' : '') + roi + '%';
+        const isBest = profit === maxProfitAtP && profit > 0;
+        const isSelected = idx === selectedStrategyIdx;
+
+        let barStyle = '';
+        let barColor = '';
+        let textColor = '';
+
+        if (profit > 0) {
+          const norm = Math.min(1, profit / MAX_PROFIT);
+          const widthPct = Math.pow(norm, 0.62) * (100 - ZERO_PCT);
+          barStyle = `left: ${ZERO_PCT}%; width: ${Math.max(1.5, widthPct)}%;`;
+          barColor = 'bg-emerald-500';
+          textColor = 'text-emerald-500';
+        } else if (profit < 0) {
+          const norm = Math.min(1, Math.abs(profit) / MAX_LOSS);
+          const widthPct = Math.pow(norm, 0.75) * ZERO_PCT;
+          const leftPct = Math.max(0, ZERO_PCT - widthPct);
+          barStyle = `left: ${leftPct}%; width: ${Math.max(1.5, widthPct)}%;`;
+          barColor = 'bg-rose-500';
+          textColor = 'text-rose-500';
+        } else {
+          barStyle = `left: calc(${ZERO_PCT}% - 2px); width: 4px;`;
+          barColor = 'bg-amber-400';
+          textColor = 'text-[var(--muted-foreground)]';
+        }
+
+        return `
+          <div onclick="selectStrategy(${idx})" role="button" tabindex="0"
+            class="p-2 rounded-lg border transition cursor-pointer ${isSelected ? 'border-[var(--primary)] bg-[var(--background)]' : 'border-transparent hover:border-[var(--border)]'}">
+            <div class="flex items-baseline justify-between gap-1 text-xs mb-1">
+              <div class="truncate">
+                <span class="inline-block w-2.5 h-2.5 rounded-full mr-1.5" style="background:${s.color}"></span>
+                <span class="font-semibold">${s.name}</span>
+                ${isBest ? `<span class="ml-1.5 px-1.5 py-0.5 text-xs font-semibold rounded bg-emerald-500/15 text-emerald-500">★ Best here</span>` : ''}
+              </div>
+              <div class="font-medium whitespace-nowrap">
+                <span>$${Math.round(endVal).toLocaleString()}</span>
+                <span class="${textColor} font-semibold ml-1">(${fmtMoney(profit)} / ${roiStr})</span>
+              </div>
+            </div>
+            <div class="relative w-full h-3 bg-[var(--background)] border border-[var(--border)] rounded-full overflow-hidden">
+              <div class="absolute top-0 bottom-0 w-0.5 bg-[var(--foreground)] opacity-40 z-10" style="left: ${ZERO_PCT}%;"></div>
+              <div class="absolute top-0 bottom-0 ${barColor} rounded-full transition-all duration-75" style="${barStyle}"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      renderSVGChart(list, p);
+
+      const sel = list[selectedStrategyIdx] || list[0];
+      const { profit: selProfit } = sel.calc(p);
+      const inspector = document.getElementById('inspector-bar');
+      inspector.innerHTML = `
+        <div class="space-y-1">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="font-bold text-sm text-[var(--foreground)]">${sel.name}</span>
+            <span class="text-[var(--muted-foreground)]">• Breakeven: <strong>${sel.breakeven}</strong></span>
+            <span class="text-[var(--muted-foreground)]">• ${sel.subtitle}</span>
+          </div>
+          <div class="text-[var(--muted-foreground)] leading-relaxed">
+            <strong class="text-[var(--foreground)]">Explain Like I'm 5:</strong> ${sel.eli5}
+            <strong class="text-[var(--foreground)] ml-1">Verdict at $${p} (${pctStr}):</strong> ${sel.verdict(p, selProfit)}
+          </div>
+        </div>
+      `;
+    }
+
+    (function initSVGDrag() {
+      const svg = document.getElementById('payoff-svg');
+      let dragging = false;
+      function handlePointer(e) {
+        const rect = svg.getBoundingClientRect();
+        const padL = (42 / 280) * rect.width;
+        const padR = (14 / 280) * rect.width;
+        const plotW = rect.width - padL - padR;
+        const relX = e.clientX - rect.left - padL;
+        const ratio = Math.max(0, Math.min(1, relX / plotW));
+        const price = Math.round(70 + ratio * 60);
+        updatePrice(price);
+      }
+      svg.addEventListener('pointerdown', (e) => {
+        dragging = true;
+        svg.setPointerCapture(e.pointerId);
+        handlePointer(e);
+      });
+      svg.addEventListener('pointermove', (e) => {
+        if (dragging) handlePointer(e);
+      });
+      svg.addEventListener('pointerup', () => { dragging = false; });
+      svg.addEventListener('pointercancel', () => { dragging = false; });
+    })();
+
+    setMode('volatility');
+  </script>
+</body>
+</html>
